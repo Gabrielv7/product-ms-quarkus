@@ -1,7 +1,6 @@
 package com.gabriel.afonso.api;
 
 import com.gabriel.afonso.domain.model.Product;
-import com.gabriel.afonso.domain.repository.ProductRepository;
 import com.gabriel.afonso.service.ProductService;
 
 import javax.inject.Inject;
@@ -19,35 +18,27 @@ import java.util.List;
 public class ProductResource {
 
     @Inject
-    ProductRepository productRepository;
-
-    @Inject
     ProductService productService;
 
     @GET
     public List<Product> listar(){
-        return productRepository.listAll();
+        return productService.listar();
     }
 
     @GET
     @Path("/search")
-    public List<Product> listarProductPrice(@QueryParam("minPrice") BigDecimal minPrice,
+    public List<Product> listProductPrice(@QueryParam("minPrice") BigDecimal minPrice,
                                             @QueryParam("maxPrice") BigDecimal maxPrice){
 
-        return productRepository.findPrice(minPrice,maxPrice);
+        return productService.listProductPrice(minPrice,maxPrice);
 
-    }
-
-    @GET
-    public List<Product> listarPorPreco(BigDecimal price){
-        return productRepository.list("where :price > 50", price);
     }
 
     @GET
     @Path("/{id}")
     public Response buscar(@PathParam("id") Long id){
 
-        var product =productService.buscarOuFalhar(id);
+        var product = productService.buscarOuFalhar(id);
 
         return Response.ok().entity(product).build();
     }
@@ -77,9 +68,7 @@ public class ProductResource {
     @Transactional
     public Response deletar(@PathParam("id") Long id){
 
-        productService.buscarOuFalhar(id);
-
-        productRepository.deleteById(id);
+        productService.deletar(id);
 
         return Response.noContent().build();
     }

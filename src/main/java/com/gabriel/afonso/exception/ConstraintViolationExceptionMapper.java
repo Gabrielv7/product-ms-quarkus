@@ -3,7 +3,6 @@ package com.gabriel.afonso.exception;
 import io.netty.handler.codec.http.HttpResponseStatus;
 
 import javax.validation.ConstraintViolationException;
-import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
